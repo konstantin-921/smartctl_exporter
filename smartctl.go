@@ -82,6 +82,7 @@ func (smart *SMARTctl) Collect() {
 	smart.minePowerOnSeconds()
 	smart.mineRotationRate()
 	smart.mineTemperatures()
+	smart.mineNvmeTemperatureSensor()
 	smart.minePowerCycleCount() // ATA/SATA, NVME, SCSI, SAS
 	smart.mineDeviceSCTStatus()
 	smart.mineDeviceStatistics()
@@ -275,6 +276,28 @@ func (smart *SMARTctl) mineTemperatures() {
 			)
 			return true
 		})
+	}
+}
+
+func (smart *SMARTctl) mineNvmeTemperatureSensor() {
+	if smart.json.Get("nvme_smart_health_information_log.temperature_sensors").Exists() {
+		temperatures := smart.json.Get("nvme_smart_health_information_log.temperature_sensors").Array()
+		if temperatures[0].Exists() {
+			smart.ch <- prometheus.MustNewConstMetric(
+				metricDeviceNvmeTemperatureSensor1,
+				prometheus.GaugeValue,
+				temperatures[0].Float(),
+				smart.device.device,
+			)
+		}
+		if temperatures[1].Exists() {
+			smart.ch <- prometheus.MustNewConstMetric(
+				metricDeviceNvmeTemperatureSensor2,
+				prometheus.GaugeValue,
+				temperatures[1].Float(),
+				smart.device.device,
+			)
+		}
 	}
 }
 

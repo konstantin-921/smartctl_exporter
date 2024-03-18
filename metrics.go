@@ -138,6 +138,22 @@ var (
 		},
 		nil,
 	)
+	metricDeviceNvmeTemperatureSensor1 = prometheus.NewDesc(
+		"smartctl_device_nvme_temperature_sensor1",
+		"Device temperature celsius",
+		[]string{
+			"device",
+		},
+		nil,
+	)
+	metricDeviceNvmeTemperatureSensor2 = prometheus.NewDesc(
+		"smartctl_device_nvme_temperature_sensor2",
+		"Device temperature celsius",
+		[]string{
+			"device",
+		},
+		nil,
+	)
 	metricDevicePowerCycleCount = prometheus.NewDesc(
 		"smartctl_device_power_cycle_count",
 		"Device power cycle count",
