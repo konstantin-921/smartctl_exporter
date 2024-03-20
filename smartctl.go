@@ -82,7 +82,6 @@ func (smart *SMARTctl) Collect() {
 	smart.minePowerOnSeconds()
 	smart.mineRotationRate()
 	smart.mineTemperatures()
-	smart.mineNvmeTemperatureSensor()
 	smart.minePowerCycleCount() // ATA/SATA, NVME, SCSI, SAS
 	smart.mineDeviceSCTStatus()
 	smart.mineDeviceStatistics()
@@ -100,6 +99,7 @@ func (smart *SMARTctl) Collect() {
 		smart.mineNvmeNumErrLogEntries()
 		smart.mineNvmeBytesRead()
 		smart.mineNvmeBytesWritten()
+		smart.mineNvmeTemperatureSensor()
 	}
 	// SCSI, SAS
 	if smart.device.interface_ == "scsi" {
