@@ -7,3 +7,6 @@ debug/
 Manifest
 smartctl_exporter
 *.exe
+.circleci
+.github
+.yamllint
